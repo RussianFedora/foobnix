@@ -69,7 +69,7 @@ python setup.py install --root=%{buildroot}
 # fix E: wrong-file-end-of-line-encoding 
 sed -i 's/\r//' %{buildroot}%{python_sitelib}/%{name}/thirdparty/google/browser.py
 
-# teese files should me executable
+# these files should me executable
 chmod 755 %{buildroot}%{python_sitelib}/%{name}/thirdparty/google/browser.py
 chmod 755 %{buildroot}%{python_sitelib}/%{name}/preferences/preferences_window.py
 chmod 755 %{buildroot}%{python_sitelib}/%{name}/thirdparty/google/search.py
