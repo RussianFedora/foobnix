@@ -1,16 +1,16 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
-%define rel	1
+%define rel	6
 
 Summary:	Simple and Powerful music player for Linux
 Summary(ru):	Простой и мощный плеер музыки для ОС Linux
 Name:		foobnix
-Version:	0.2.3
+Version:	0.2.5
 Release:	1%{?dist}
 
-URL:		http://www.foobnix.com/welcome
+URL:		http://www.foobnix.com/
 License:	GPLv3
-Source:		https://launchpad.net/%7Efoobnix-player/+archive/foobnix/+files/%{name}_%{version}-1l.tar.gz
+Source:		https://launchpad.net/%7Efoobnix-player/+archive/foobnix/+files/%{name}_%{version}-6m.tar.gz
 Group:		Applications/Multimedia
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -95,5 +95,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Feb 24 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 0.2.5-1
+- update to 0.2.5
+
 * Tue Jan 25 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 0.2.3-1
 - initla build
