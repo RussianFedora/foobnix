@@ -10,7 +10,7 @@ Release:	1%{?dist}
 
 URL:		http://www.foobnix.com/
 License:	GPLv3
-Source:		https://launchpad.net/%7Efoobnix-player/+archive/foobnix/+files/%{name}_%{version}-6m.tar.gz
+Source:		https://launchpad.net/~foobnix-player/+archive/foobnix/+files/%{name}_%{version}-6m.tar.gz
 Group:		Applications/Multimedia
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
