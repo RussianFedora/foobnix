@@ -1,0 +1,26 @@
+From bda43052d47cc697a8a0e29df599b6f925e98ab5 Mon Sep 17 00:00:00 2001
+From: Peter Lemenkov <lemenkov@gmail.com>
+Date: Fri, 3 Jun 2011 18:28:56 +0400
+Subject: [PATCH 2/4] Don't install doc-files (Fedora-specific)
+
+Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
+---
+ src/setup.py |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
+
+diff --git a/src/setup.py b/src/setup.py
+index c3175b8..bd497f3 100644
+--- a/src/setup.py
++++ b/src/setup.py
+@@ -10,8 +10,6 @@ if os.name == 'nt':
+ VERSION = "2.5.25"
+ 
+ data_files = [
+-    ('share/foobnix', ['README']),
+-    ('share/foobnix', ['CHANGELOG']),
+     ('share/applications', ['foobnix.desktop']),
+     ('share/pixmaps/theme', glob.glob('foobnix/pixmaps/theme/*')),
+     ('share/pixmaps', glob.glob('foobnix/pixmaps/*.png')),
+-- 
+1.7.6
+

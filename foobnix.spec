@@ -1,80 +1,75 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
+%global git_tag 5295204
 
-%define rel	6
 
-Summary:	Simple and Powerful music player for Linux
+Summary:	Simple and powerful music player for Linux
 Summary(ru):	Простой и мощный плеер музыки для ОС Linux
 Name:		foobnix
-Version:	0.2.5
-Release:	1%{?dist}
+Version:	2.5.25
+Release:	1.git%{git_tag}%{?dist}
 
-URL:		http://www.foobnix.com/
+URL:		http://www.foobnix.com/?lang=en
 License:	GPLv3
-Source:		https://launchpad.net/~foobnix-player/+archive/foobnix/+files/%{name}_%{version}-6m.tar.gz
+# wget https://github.com/foobnix/foobnix/tarball/eeb56ad
+Source0:	%{name}-%{name}-%{git_tag}.tar.gz
+Patch1:		foobnix-0001-Drop-bundled-python-libraries.patch
+Patch2:		foobnix-0002-Don-t-install-doc-files-Fedora-specific.patch
+Patch3:		foobnix-0003-Partially-revert-4cade9edcc48d134648e4751c5cafe13e2f.patch
+Patch4:		foobnix-0004-Don-t-use-get_release_year-from-forked-pylast.patch
 Group:		Applications/Multimedia
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:	python-chardet
-BuildRequires:	pygtk2-devel 
-BuildRequires:	pygtk2-libglade
-BuildRequires:	python-mutagen
-BuildRequires:	python-simplejson
-BuildRequires:	python-setuptools 
-BuildRequires:	gstreamer-plugins-good
-BuildRequires:	gstreamer-plugins-bad
-BuildRequires:	gstreamer-plugins-bad-free
-BuildRequires:	gstreamer-plugins-bad-free-extras
-BuildRequires:	gstreamer-ffmpeg
-BuildRequires:	gstreamer-plugins-ugly
-BuildRequires:	gstreamer-python
-BuildRequires:	gettext-devel
-BuildRequires:	fuseiso
-BuildRequires:	python-keybinder
+BuildRequires:	desktop-file-utils
+BuildRequires:	gettext
 
-Requires:	python-chardet
-Requires:	python-mutagen
-Requires:	gstreamer-plugins-good
+Requires:	dbus-python
 Requires:	gstreamer-python
-Requires:	gstreamer-ffmpeg
-Requires:	gstreamer-plugins-ugly
+Requires:	pygtk2
+Requires:	pylast
+Requires:	python-chardet
+Requires:	python-lyricwiki
+Requires:	python-mutagen
+Requires:	python-simplejson
+Requires:	python-xgoogle
 
 BuildArch:	noarch
 
 
-%description 
-Simple and Powerful music player for Linux
-
-All best features in one player. Foobnix small, fast, customize, powerful
-music player with user-friendly interface.
+%description
+Simple and powerful music player for Linux with all necessary features. Foobnix
+is a small, fast, customizable, powerful music player with user-friendly
+interface.
 
 
 %description -l ru
-Простой и мощный плеер музыки для ОС Linux
+Простой и мощный плеер музыки для ОС Linux.
 
 
 %prep
-%setup -q -n %{name}_%{version}-%{rel}
-sed -i 's!\$!;!g' foobnix.desktop
+%setup -q -n %{name}-%{name}-%{git_tag}
+%patch1 -p1 -b .bundled_libs
+%patch2 -p1 -b .no_docs
+%patch3 -p1 -b .revert_po_removal
+%patch4 -p1 -b .no_private_funcs
+rm -rf src/foobnix/thirdparty
+rm -rf dist
+#mv src/po/by.po src/po/be.po
+sed -i -e "/^#\!\/usr\/bin\/env/d" src/foobnix/preferences/preferences_window.py
 
 
 %build
+cd src
 python setup.py build
 
 
 %install
 rm -rf %{buildroot}
+cd src
+python setup.py install --root %{buildroot}
 
-python setup.py install --root=%{buildroot}
+desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
-# fix E: wrong-file-end-of-line-encoding 
-sed -i 's/\r//' %{buildroot}%{python_sitelib}/%{name}/thirdparty/google/browser.py
-
-# these files should me executable
-chmod 755 %{buildroot}%{python_sitelib}/%{name}/thirdparty/google/browser.py
-chmod 755 %{buildroot}%{python_sitelib}/%{name}/preferences/preferences_window.py
-chmod 755 %{buildroot}%{python_sitelib}/%{name}/thirdparty/google/search.py
-chmod 755 %{buildroot}%{python_sitelib}/%{name}/thirdparty/google/__init__.py
-
+cd -
 %find_lang %{name}
 
 
@@ -83,18 +78,40 @@ rm -rf %{buildroot}
 
 %files -f %{name}.lang
 %defattr (-,root,root,0755)
-%doc README COPYING CHANGELOG
+%doc src/README src/COPYING src/CHANGELOG
 %{_bindir}/%{name}
 %{python_sitelib}/*
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/%{name}/*
 %{_datadir}/pixmaps/%{name}*
+%{_datadir}/pixmaps/vk.png
 %{_datadir}/pixmaps/theme/cat.jpg
 %{_datadir}/pixmaps/theme/flower.jpg
 %{_mandir}/man1/%{name}*
 
 
 %changelog
+* Mon Sep 12 2011 Peter Lemenkov <lemenkov@gmail.com> - 2.5.23-1.git5295204
+- Ver. 2.5.24
+
+* Sun Sep 11 2011 Peter Lemenkov <lemenkov@gmail.com> - 2.5.23-1.gite391906
+- Update to the latest git snapshot
+
+* Sun Aug 14 2011 Peter Lemenkov <lemenkov@gmail.com> - 2.5.23-1.giteeb56ad
+- Update to the latest git snapshot
+
+* Sat Jul 09 2011 Peter Lemenkov <lemenkov@gmail.com> - 2.5.17-2.git4c93748
+- Don't use functions specific to the forked copy of pylast
+
+* Sat Jul 09 2011 Peter Lemenkov <lemenkov@gmail.com> - 2.5.17-1.git4c93748
+- Update to the latest git snapshot
+
+* Wed Jun 29 2011 Peter Lemenkov <lemenkov@gmail.com> - 2.5.16-1.git31ad572
+- Update to the latest git snapshot
+
+* Fri Jun 03 2011 Peter Lemenkov <lemenkov@gmail.com> - 2.5.15-1.git12b0915
+- Update to the latest git tag
+
 * Thu Feb 24 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 0.2.5-1
 - update to 0.2.5
 

@@ -1,0 +1,193 @@
+From 5ae491cd60c5244909191e5cd664e4d22a41a3f8 Mon Sep 17 00:00:00 2001
+From: Peter Lemenkov <lemenkov@gmail.com>
+Date: Fri, 3 Jun 2011 17:38:14 +0400
+Subject: [PATCH 1/4] Drop bundled python libraries
+
+Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
+---
+ src/foobnix/regui/infopanel.py              |    4 ++--
+ src/foobnix/regui/service/google_service.py |    4 ++--
+ src/foobnix/regui/service/lastfm_service.py |    6 +++---
+ src/foobnix/util/audio.py                   |   22 +++++++++++-----------
+ src/foobnix/util/id3_util.py                |    2 +-
+ src/foobnix/util/tag_util.py                |    4 ++--
+ src/setup.py                                |    3 ---
+ src/test/test_google_service.py             |    2 +-
+ 8 files changed, 22 insertions(+), 25 deletions(-)
+ delete mode 100644 src/foobnix/thirdparty/__init__.py
+
+diff --git a/src/foobnix/regui/infopanel.py b/src/foobnix/regui/infopanel.py
+index 959d561..651c41a 100644
+--- a/src/foobnix/regui/infopanel.py
++++ b/src/foobnix/regui/infopanel.py
+@@ -12,7 +12,7 @@ from foobnix.regui.model import FModel
+ from foobnix.regui.state import LoadSave
+ from foobnix.helpers.image import ImageBase
+ from foobnix.helpers.textarea import TextArea
+-from foobnix.thirdparty.lyr import get_lyrics
++from lyricwiki import get_lyrics
+ from foobnix.regui.model.signal import FControl
+ from foobnix.helpers.my_widgets import EventLabel
+ from foobnix.helpers.pref_widgets import HBoxDecorator
+@@ -363,4 +363,4 @@ class InfoPanelWidget(gtk.Frame, LoadSave, FControl):
+         pass    
+     
+     def on_quit(self):
+-        FCache().on_quit()     
+\ No newline at end of file
++        FCache().on_quit()     
+diff --git a/src/foobnix/regui/service/google_service.py b/src/foobnix/regui/service/google_service.py
+index e8843d5..3fb78f4 100644
+--- a/src/foobnix/regui/service/google_service.py
++++ b/src/foobnix/regui/service/google_service.py
+@@ -4,7 +4,7 @@ Created on Oct 25, 2010
+ @author: ivan
+ '''
+ import logging
+-from foobnix.thirdparty.google.search import GoogleSearch
++from xgoogle.search import GoogleSearch
+ def google_search_results(query, results_count=10):
+     results = []
+     try:
+@@ -18,4 +18,4 @@ def google_search_results(query, results_count=10):
+             results.append(str(result))
+     except :
+         logging.error("Google Search Result Error")
+-    return results
+\ No newline at end of file
++    return results
+diff --git a/src/foobnix/regui/service/lastfm_service.py b/src/foobnix/regui/service/lastfm_service.py
+index 0102789..d5c6a6d 100644
+--- a/src/foobnix/regui/service/lastfm_service.py
++++ b/src/foobnix/regui/service/lastfm_service.py
+@@ -10,12 +10,12 @@ import logging
+ 
+ from foobnix.fc.fc import FC
+ from foobnix.fc.fc_base import FCBase
+-from foobnix.thirdparty import pylast
++import pylast
+ from foobnix.regui.model import FModel
+ from foobnix.util.const import FTYPE_VIDEO
+ from foobnix.util.file_utils import file_extension
+-from foobnix.thirdparty.pylast import WSError, Tag
+-from foobnix.thirdparty.google.translate import translate
++from pylast import WSError, Tag
++from xgoogle import translate
+ import time
+ 
+ 
+diff --git a/src/foobnix/thirdparty/__init__.py b/src/foobnix/thirdparty/__init__.py
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/src/foobnix/util/audio.py b/src/foobnix/util/audio.py
+index 04d4dc3..40b4ea3 100644
+--- a/src/foobnix/util/audio.py
++++ b/src/foobnix/util/audio.py
+@@ -4,15 +4,15 @@ Created on Nov 10, 2010
+ @author: ivan
+ '''
+ from foobnix.util.file_utils import get_file_extension
+-from foobnix.thirdparty.mutagen.mp3 import MP3
+-from foobnix.thirdparty.mutagen.wavpack import WavPack
+-from foobnix.thirdparty.mutagen.oggvorbis import OggVorbis
++from mutagen.mp3 import MP3
++from mutagen.wavpack import WavPack
++from mutagen.oggvorbis import OggVorbis
+ 
+-from foobnix.thirdparty.mutagen.easyid3 import EasyID3
+-from foobnix.thirdparty.mutagen.mp4 import MP4
++from mutagen.easyid3 import EasyID3
++from mutagen.mp4 import MP4
+ import logging
+-from foobnix.thirdparty.mutagen.flac import FLAC
+-from foobnix.thirdparty.mutagen.monkeysaudio import MonkeysAudio
++from mutagen.flac import FLAC
++from mutagen.monkeysaudio import MonkeysAudio
+ 
+ def get_mutagen_audio (path):
+     logging.debug("GET mutagen audio" + path)
+@@ -30,15 +30,15 @@ def get_mutagen_audio (path):
+         try:
+             audio = OggVorbis(path)
+         except:
+-            from foobnix.thirdparty.mutagen.oggtheora import OggTheora
++            from mutagen.oggtheora import OggTheora
+             try:
+                 audio = OggTheora(path)
+             except:
+-                from foobnix.thirdparty.mutagen.oggflac import OggFLAC
++                from mutagen.oggflac import OggFLAC
+                 try:
+                     audio = OggFLAC(path)
+                 except:
+-                    from foobnix.thirdparty.mutagen.oggspeex import OggSpeex
++                    from mutagen.oggspeex import OggSpeex
+                     try:
+                         audio = OggSpeex(path)
+                     except:
+@@ -47,4 +47,4 @@ def get_mutagen_audio (path):
+     if ext == ".m4a" or ext == ".mp4" or ext == ".mkv":
+         audio = MP4(path)
+         
+-    return audio 
+\ No newline at end of file
++    return audio 
+diff --git a/src/foobnix/util/id3_util.py b/src/foobnix/util/id3_util.py
+index b70fe8f..27fd785 100644
+--- a/src/foobnix/util/id3_util.py
++++ b/src/foobnix/util/id3_util.py
+@@ -8,7 +8,7 @@ import os
+ import re
+ import logging
+ 
+-from foobnix.thirdparty.mutagen.mp4 import MP4
++from mutagen.mp4 import MP4
+ from foobnix.fc.fc import FC
+ from foobnix.util.image_util import get_image_by_path
+ from foobnix.util.time_utils import convert_seconds_to_text
+diff --git a/src/foobnix/util/tag_util.py b/src/foobnix/util/tag_util.py
+index cbc7f5e..51c43c2 100644
+--- a/src/foobnix/util/tag_util.py
++++ b/src/foobnix/util/tag_util.py
+@@ -12,9 +12,9 @@ import os.path
+ from foobnix.util.id3_util import decode_cp866
+ from foobnix.util.audio import get_mutagen_audio
+ from foobnix.helpers.window import ChildTopWindow
+-from foobnix.thirdparty.mutagen.easyid3 import EasyID3
++from mutagen.easyid3 import EasyID3
+ from foobnix.util.localization import foobnix_localization
+-from foobnix.thirdparty.mutagen.mp4 import MP4, MP4MetadataValueError
++from mutagen.mp4 import MP4, MP4MetadataValueError
+ 
+ foobnix_localization()
+ 
+diff --git a/src/setup.py b/src/setup.py
+index dc9cbed..c3175b8 100644
+--- a/src/setup.py
++++ b/src/setup.py
+@@ -101,9 +101,6 @@ setup(name='foobnix',
+                 "foobnix.regui.notetab",
+                 "foobnix.regui.service",
+                 "foobnix.regui.treeview",
+-                "foobnix.thirdparty",
+-                "foobnix.thirdparty.google",
+-                "foobnix.thirdparty.mutagen",
+                 "foobnix.util",
+                 ],
+         scripts=['foobnix/foobnix'],
+diff --git a/src/test/test_google_service.py b/src/test/test_google_service.py
+index 356f273..b83ad1c 100644
+--- a/src/test/test_google_service.py
++++ b/src/test/test_google_service.py
+@@ -6,7 +6,7 @@ Created on 22 нояб. 2010
+ '''
+ import unittest
+ from foobnix.regui.service.google_service import google_search_results
+-from foobnix.thirdparty.google.translate import translate
++from xgoogle import translate
+ class TestGoogleService(unittest.TestCase):
+         
+     def test_find_word(self):
+-- 
+1.7.6
+
