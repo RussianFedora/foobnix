@@ -1,17 +1,18 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-%global git_tag 5295204
+%global git_tag 49ac470
 
 
 Summary:	Simple and powerful music player for Linux
 Summary(ru):	Простой и мощный плеер музыки для ОС Linux
 Name:		foobnix
 Version:	2.5.25
-Release:	1.git%{git_tag}%{?dist}
+Release:	1.git%{git_tag}%{?dist}.R
 
 URL:		http://www.foobnix.com/?lang=en
 License:	GPLv3
 # wget https://github.com/foobnix/foobnix/tarball/eeb56ad
-Source0:	%{name}-%{name}-%{git_tag}.tar.gz
+#Source0:	%{name}-%{name}-%{git_tag}.tar.gz
+Source0:	https://github.com/foobnix/foobnix/tarball/%{git_tag}
 Patch1:		foobnix-0001-Drop-bundled-python-libraries.patch
 Patch2:		foobnix-0002-Don-t-install-doc-files-Fedora-specific.patch
 Patch3:		foobnix-0003-Partially-revert-4cade9edcc48d134648e4751c5cafe13e2f.patch
@@ -91,6 +92,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Sep 19 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 2.5.25-1.git49ac470
+- Update to the latest git snapshot
+
 * Mon Sep 12 2011 Peter Lemenkov <lemenkov@gmail.com> - 2.5.23-1.git5295204
 - Ver. 2.5.24
 
