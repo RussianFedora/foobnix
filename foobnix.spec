@@ -2,38 +2,35 @@
 %global gitcommit 49ac470
 
 
-Summary:	Simple and powerful music player for Linux
-Summary(ru):	Простой и мощный плеер музыки для ОС Linux
-Name:		foobnix
-Version:	2.5.25
-Release:	1.git%{gitcommit}%{?dist}.R
+Summary:    Simple and powerful music player for Linux
+Summary(ru):Простой и мощный плеер музыки для ОС Linux
+Name:       foobnix
+Version:    2.5.25
+Release:    1.git%{gitcommit}%{?dist}.R
 
-URL:		http://www.foobnix.com/?lang=en
-License:	GPLv3
-# wget https://github.com/foobnix/foobnix/tarball/eeb56ad
-#Source0:	%{name}-%{name}-%{gitcommit}.tar.gz
-Source0:	https://github.com/foobnix/foobnix/tarball/%{gitcommit}
-Patch1:		foobnix-0001-Drop-bundled-python-libraries.patch
-Patch2:		foobnix-0002-Don-t-install-doc-files-Fedora-specific.patch
-Patch3:		foobnix-0003-Partially-revert-4cade9edcc48d134648e4751c5cafe13e2f.patch
-Patch4:		foobnix-0004-Don-t-use-get_release_year-from-forked-pylast.patch
-Group:		Applications/Multimedia
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+URL:    http://www.foobnix.com/?lang=en
+License:    GPLv3
+Source0:    https://github.com/foobnix/foobnix/tarball/%{gitcommit}
+Patch1:     foobnix-0001-Drop-bundled-python-libraries.patch
+Patch2:     foobnix-0002-Don-t-install-doc-files-Fedora-specific.patch
+Patch3:     foobnix-0003-Partially-revert-4cade9edcc48d134648e4751c5cafe13e2f.patch
+Patch4:     foobnix-0004-Don-t-use-get_release_year-from-forked-pylast.patch
+Group:      Applications/Multimedia
 
-BuildRequires:	desktop-file-utils
-BuildRequires:	gettext
+BuildRequires:  desktop-file-utils
+BuildRequires:  gettext
 
-Requires:	dbus-python
-Requires:	gstreamer-python
-Requires:	pygtk2
-Requires:	pylast
-Requires:	python-chardet
-Requires:	python-lyricwiki
-Requires:	python-mutagen
-Requires:	python-simplejson
-Requires:	python-xgoogle
+Requires:   dbus-python
+Requires:   gstreamer-python
+Requires:   pygtk2
+Requires:   pylast
+Requires:   python-chardet
+Requires:   python-lyricwiki
+Requires:   python-mutagen
+Requires:   python-simplejson
+Requires:   python-xgoogle
 
-BuildArch:	noarch
+BuildArch:  noarch
 
 
 %description
