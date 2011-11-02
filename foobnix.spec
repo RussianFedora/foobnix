@@ -1,12 +1,14 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 %global gitcommit 38b5ed8
+%global date 20111102
+%global realver 2.5.25
 
 
 Summary:    Simple and powerful music player for Linux
 Summary(ru):Простой и мощный плеер музыки для ОС Linux
 Name:       foobnix
-Version:    2.5.25
-Release:    1.git%{gitcommit}%{?dist}.R
+Version:    %{realver}.%{date}git%{gitcommit}
+Release:    1%{dist}.R
 
 URL:    http://www.foobnix.com/?lang=en
 License:    GPLv3
@@ -81,7 +83,7 @@ rm -rf %{buildroot}
 
 
 %changelog
-* Wed Nov 02 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 2.5.25-1.git38b5ed8
+* Wed Nov 02 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 2.5.25.20001102git38b5ed8-1.R
 - Update to the latest git snapshot
 - Drop patches
 
