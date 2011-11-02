@@ -1,5 +1,5 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-%global gitcommit 49ac470
+%global gitcommit 38b5ed8
 
 
 Summary:    Simple and powerful music player for Linux
@@ -11,10 +11,6 @@ Release:    1.git%{gitcommit}%{?dist}.R
 URL:    http://www.foobnix.com/?lang=en
 License:    GPLv3
 Source0:    https://github.com/foobnix/foobnix/tarball/%{gitcommit}
-Patch1:     foobnix-0001-Drop-bundled-python-libraries.patch
-Patch2:     foobnix-0002-Don-t-install-doc-files-Fedora-specific.patch
-Patch3:     foobnix-0003-Partially-revert-4cade9edcc48d134648e4751c5cafe13e2f.patch
-Patch4:     foobnix-0004-Don-t-use-get_release_year-from-forked-pylast.patch
 Group:      Applications/Multimedia
 
 BuildRequires:  desktop-file-utils
@@ -45,11 +41,7 @@ interface.
 
 %prep
 %setup -q -n %{name}-%{name}-%{gitcommit}
-%patch1 -p1 -b .bundled_libs
-%patch2 -p1 -b .no_docs
-%patch3 -p1 -b .revert_po_removal
-%patch4 -p1 -b .no_private_funcs
-rm -rf src/foobnix/thirdparty
+#rm -rf src/foobnix/thirdparty
 rm -rf dist
 #mv src/po/by.po src/po/be.po
 sed -i -e "/^#\!\/usr\/bin\/env/d" src/foobnix/preferences/preferences_window.py
@@ -89,6 +81,10 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Nov 02 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 2.5.25-1.git38b5ed8
+- Update to the latest git snapshot
+- Drop patches
+
 * Mon Sep 19 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 2.5.25-1.git49ac470
 - Update to the latest git snapshot
 
