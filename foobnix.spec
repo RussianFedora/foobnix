@@ -52,9 +52,9 @@ sed -i -e "/^#\!\/usr\/bin\/env/d" src/foobnix/preferences/preferences_window.py
 
 
 %build
+cp %{SOURCE100} .
 cd src
 python setup.py build
-cp %{SOURCE100} .
 
 
 %install
