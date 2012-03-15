@@ -1,7 +1,7 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-%global gitcommit df1d44b
-%global date 20111222
-%global realver 2.5.32
+%global gitcommit c555fab
+%global date 20120315
+%global realver 2.5.35
 #https://github.com/foobnix/foobnix/blob/master/src/foobnix/version.py
 
 
@@ -86,6 +86,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Dec 22 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 2.5.35-1.20120315gitc555fab.R
+- Update to the latest git snapshot
+
 * Thu Dec 22 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 2.5.32-1.20111222gitdf1d44b.R
 - Update to the latest git snapshot
 
