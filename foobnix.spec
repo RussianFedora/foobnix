@@ -80,8 +80,7 @@ rm -rf %{buildroot}
 %{_datadir}/%{name}/*
 %{_datadir}/pixmaps/%{name}*
 %{_datadir}/pixmaps/vk.png
-%{_datadir}/pixmaps/theme/cat.jpg
-%{_datadir}/pixmaps/theme/flower.jpg
+%{_datadir}/pixmaps/theme/*.jpg
 %{_mandir}/man1/%{name}*
 
 
