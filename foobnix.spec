@@ -9,7 +9,7 @@ Summary:    Simple and powerful music player for Linux
 Summary(ru):Простой и мощный плеер музыки для ОС Linux
 Name:       foobnix
 Version:    %{realver}
-Release:    1.%{date}git%{gitcommit}%{dist}.R
+Release:    1.%{date}git%{gitcommit}%{dist}
 
 URL:    http://www.foobnix.com/?lang=en
 License:    GPLv3
