@@ -1,7 +1,7 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-%global gitcommit c555fab
-%global date 20120315
-%global realver 2.5.35
+%global gitcommit 35fcb24
+%global date 20121206
+%global realver 2.6.09
 #https://github.com/foobnix/foobnix/blob/master/src/foobnix/version.py
 
 
@@ -14,7 +14,6 @@ Release:    1.%{date}git%{gitcommit}%{dist}
 URL:    http://www.foobnix.com/?lang=en
 License:    GPLv3
 Source0:    https://github.com/foobnix/foobnix/tarball/%{gitcommit}
-Source100:  README.RFRemix
 Group:      Applications/Multimedia
 
 BuildRequires:  desktop-file-utils
@@ -52,7 +51,6 @@ sed -i -e "/^#\!\/usr\/bin\/env/d" src/foobnix/preferences/preferences_window.py
 
 
 %build
-cp %{SOURCE100} .
 cd src
 python setup.py build
 
@@ -68,12 +66,9 @@ cd -
 %find_lang %{name}
 
 
-%clean
-rm -rf %{buildroot}
-
 %files -f %{name}.lang
-%defattr (-,root,root,0755)
-%doc src/README src/COPYING src/CHANGELOG README.RFRemix
+#%defattr (-,root,root,0755)
+%doc src/README src/COPYING src/CHANGELOG
 %{_bindir}/%{name}
 %{python_sitelib}/*
 %{_datadir}/applications/%{name}.desktop
@@ -85,6 +80,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Jan 03 2013 Vasiliy N. Glazov <vascom2@gmail.com> - 2.6.09-1.20121206git35fcb24.R
+- Update to 2.6.09
+
 * Thu Dec 22 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 2.5.35-1.20120315gitc555fab.R
 - Update to the latest git snapshot
 
