@@ -1,6 +1,7 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-%global gitcommit 35fcb24
-%global date 20121206
+%global gitcommit 2b02942
+%global gitcommit_full 2b02942149f5694987161adc346964f7a1d89a31
+%global date 20121207
 %global realver 2.6.09
 #https://github.com/foobnix/foobnix/blob/master/src/foobnix/version.py
 
@@ -13,7 +14,7 @@ Release:    1.%{date}git%{gitcommit}%{dist}
 
 URL:    http://www.foobnix.com/?lang=en
 License:    GPLv3
-Source0:    https://github.com/foobnix/foobnix/tarball/%{gitcommit}
+Source0:    https://github.com/foobnix/foobnix/tarball/%{gitcommit_full}
 Group:      Applications/Multimedia
 
 BuildRequires:  desktop-file-utils
