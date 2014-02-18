@@ -1,8 +1,8 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-%global gitcommit 2b02942
-%global gitcommit_full 2b02942149f5694987161adc346964f7a1d89a31
-%global date 20121207
-%global realver 2.6.09
+%global gitcommit 236be1f
+%global gitcommit_full 236be1f714c5c40d563d4cd6f0ce94bc81841ccb
+%global date 20140218
+%global realver 2.6.10
 #https://github.com/foobnix/foobnix/blob/master/src/foobnix/version.py
 
 
@@ -48,39 +48,36 @@ interface.
 #rm -rf src/foobnix/thirdparty
 rm -rf dist
 #mv src/po/by.po src/po/be.po
-sed -i -e "/^#\!\/usr\/bin\/env/d" src/foobnix/preferences/preferences_window.py
+sed -i -e "/^#\!\/usr\/bin\/env/d" foobnix/preferences/preferences_window.py
 
 
 %build
-cd src
 python setup.py build
 
 
 %install
-rm -rf %{buildroot}
-cd src
 python setup.py install --root %{buildroot}
 
-desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
+#desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
-cd -
 %find_lang %{name}
 
 
 %files -f %{name}.lang
 #%defattr (-,root,root,0755)
-%doc src/README src/COPYING src/CHANGELOG
+%doc README COPYING CHANGELOG
 %{_bindir}/%{name}
 %{python_sitelib}/*
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/%{name}/*
 %{_datadir}/pixmaps/%{name}*
-%{_datadir}/pixmaps/vk.png
-%{_datadir}/pixmaps/theme/*.jpg
 %{_mandir}/man1/%{name}*
 
 
 %changelog
+* Tue Feb 18 2014 Vasiliy N. Glazov <vascom2@gmail.com> - 2.6.10-1.20140218git236be1f.R
+- Update to 2.6.10
+
 * Thu Jan 03 2013 Vasiliy N. Glazov <vascom2@gmail.com> - 2.6.09-1.20121206git35fcb24.R
 - Update to 2.6.09
 
