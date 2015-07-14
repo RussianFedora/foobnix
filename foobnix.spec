@@ -10,8 +10,8 @@ URL:            http://foobnix.com
 Source0:        https://github.com/foobnix/foobnix/archive/3.1.tar.gz
 
 BuildRequires:  desktop-file-utils, gettext
-BuildRequires:  python-chardet, python-simplejson, python-setuptools, python-mutagen
-BuildRequires:  pygobject3, webkitgtk3, keybinder3
+Requires:       python-chardet, python-simplejson, python-setuptools, python-mutagen
+Requires:       pygobject3, webkitgtk3, keybinder3
 Requires:       libsoup, libnotify
 
 BuildArch:      noarch
