@@ -1,80 +1,51 @@
-%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-%global gitcommit 236be1f
-%global gitcommit_full 236be1f714c5c40d563d4cd6f0ce94bc81841ccb
-%global date 20140218
-%global realver 2.6.10
-#https://github.com/foobnix/foobnix/blob/master/src/foobnix/version.py
+%global debug_package %{nil}
 
+Name:           foobnix
+Version:        3.1.00
+Release:        1%{?dist}
+Summary:        Simple and Powerful music player for Linux
 
-Summary:    Simple and powerful music player for Linux
-Summary(ru):Простой и мощный плеер музыки для ОС Linux
-Name:       foobnix
-Version:    %{realver}
-Release:    1.%{date}git%{gitcommit}%{dist}
+License:        GPLv3
+URL:            http://foobnix.com
+Source0:        https://github.com/foobnix/foobnix/archive/3.1.tar.gz
 
-URL:    http://www.foobnix.com/?lang=en
-License:    GPLv3
-Source0:    https://github.com/foobnix/foobnix/tarball/%{gitcommit_full}
-Group:      Applications/Multimedia
+BuildRequires:  desktop-file-utils, gettext
+BuildRequires:  python-chardet, python-simplejson, python-setuptools, python-mutagen
+BuildRequires:  pygobject3, webkitgtk3, keybinder3
+Requires:       libsoup, libnotify
 
-BuildRequires:  desktop-file-utils
-BuildRequires:  gettext
-
-Requires:   dbus-python
-Requires:   gstreamer-python
-Requires:   pygtk2
-Requires:   pylast
-Requires:   python-chardet
-Requires:   python-lyricwiki
-Requires:   python-mutagen
-Requires:   python-simplejson
-Requires:   python-xgoogle
-
-BuildArch:  noarch
-
+BuildArch:      noarch
 
 %description
 Simple and powerful music player for Linux with all necessary features. Foobnix
 is a small, fast, customizable, powerful music player with user-friendly
 interface.
 
-
-%description -l ru
-Простой и мощный плеер музыки для ОС Linux.
-
-
 %prep
-%setup -q -n %{name}-%{name}-%{gitcommit}
-#rm -rf src/foobnix/thirdparty
-rm -rf dist
-#mv src/po/by.po src/po/be.po
-sed -i -e "/^#\!\/usr\/bin\/env/d" foobnix/preferences/preferences_window.py
-
+%setup -q
 
 %build
-python setup.py build
-
+%{__python} setup.py build
 
 %install
-python setup.py install --root %{buildroot}
-
-#desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
+%{__python} setup.py install --root %{buildroot}
 
 %find_lang %{name}
 
-
 %files -f %{name}.lang
-#%defattr (-,root,root,0755)
-%doc README COPYING CHANGELOG
+%doc README CHANGELOG
+%license COPYING
 %{_bindir}/%{name}
 %{python_sitelib}/*
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/%{name}/*
+%{_datadir}/%{name}
 %{_datadir}/pixmaps/%{name}*
 %{_mandir}/man1/%{name}*
 
-
 %changelog
+* Tue Jul 14 2015 Maxim Orlov <murmansksity@gmail.com> - 3.1.00-1
+- Update to 3.1.00
+
 * Tue Feb 18 2014 Vasiliy N. Glazov <vascom2@gmail.com> - 2.6.10-1.20140218git236be1f.R
 - Update to 2.6.10
 
