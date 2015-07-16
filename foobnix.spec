@@ -22,7 +22,7 @@ is a small, fast, customizable, powerful music player with user-friendly
 interface.
 
 %prep
-%setup -q
+%setup -q -n %{name}-3.1
 
 %build
 %{__python} setup.py build
