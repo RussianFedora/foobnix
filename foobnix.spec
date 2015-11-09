@@ -1,48 +1,73 @@
-%global debug_package %{nil}
+%global commit 45855177dce053b9724ea18f7f886ed85db06cac
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global date 20151104
 
 Name:           foobnix
-Version:        3.1.00
-Release:        1%{?dist}
-Summary:        Simple and Powerful music player for Linux
+Version:        3.1.01
+Release:        1.%{date}git%{shortcommit}%{?dist}
+Summary:        Simple and powerful music player for Linux
 
 License:        GPLv3
 URL:            http://foobnix.com
-Source0:        https://github.com/foobnix/foobnix/archive/3.1.tar.gz
-
-BuildRequires:  desktop-file-utils, gettext
-Requires:       python-chardet, python-simplejson, python-setuptools, python-mutagen
-Requires:       pygobject3, webkitgtk3, keybinder3
-Requires:       libsoup, libnotify
+Source0:        https://github.com/zavlab1/%{name}/archive/%{commit}.tar.gz#/%{name}-%{shortcommit}.tar.gz
 
 BuildArch:      noarch
 
+BuildRequires:  desktop-file-utils
+BuildRequires:  python2-devel
+BuildRequires:  gettext
+
+Requires:       dbus-python
+Requires:       gstreamer1
+Requires:       gstreamer1-plugins-base
+Requires:       gstreamer1-plugins-good
+Requires:       python-mutagen
+Requires:       python-simplejson
+Requires:       python-setuptools
+Requires:       python-chardet
+Requires:       pygobject3
+Requires:       keybinder3
+Requires:       webkitgtk3
+Requires:       pylast
+
 %description
-Simple and powerful music player for Linux with all necessary features. Foobnix
-is a small, fast, customizable, powerful music player with user-friendly
-interface.
+Foobnix is a small, fast, customizable, powerful music player with
+user-friendly interface.
 
 %prep
-%setup -q -n %{name}-3.1
+%setup -q -n %{name}-%{commit}
 
 %build
-%{__python} setup.py build
+%{__python2} setup.py build
 
 %install
-%{__python} setup.py install --root %{buildroot}
+%{__python2} setup.py install --root %{buildroot}
 
 %find_lang %{name}
 
+%check
+desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
+
+%post
+/usr/bin/update-desktop-database &> /dev/null || :
+
+%postun
+/usr/bin/update-desktop-database &> /dev/null || :
+
 %files -f %{name}.lang
-%doc README CHANGELOG
+%doc README README.md CHANGELOG
 %license COPYING
 %{_bindir}/%{name}
-%{python_sitelib}/*
-%{_datadir}/applications/%{name}.desktop
 %{_datadir}/%{name}
-%{_datadir}/pixmaps/%{name}*
-%{_mandir}/man1/%{name}*
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/pixmaps/%{name}.png
+%{_mandir}/man1/%{name}.1*
+%{python2_sitelib}/*
 
 %changelog
+* Mon Nov 09 2015 Maxim Orlov <murmansksity@gmail.com> - 3.1.01-1.20151104git4585517.R
+- Update to latest git snapshot
+
 * Tue Jul 14 2015 Maxim Orlov <murmansksity@gmail.com> - 3.1.00-1
 - Update to 3.1.00
 
