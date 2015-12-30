@@ -1,9 +1,9 @@
-%global commit 45855177dce053b9724ea18f7f886ed85db06cac
+%global commit 5a005ade445b5ca929358694796ef49dab3732d1
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global date 20151104
+%global date 20151222
 
 Name:           foobnix
-Version:        3.1.01
+Version:        3.1.2
 Release:        1.%{date}git%{shortcommit}%{?dist}
 Summary:        Simple and powerful music player for Linux
 
@@ -35,7 +35,7 @@ Foobnix is a small, fast, customizable, powerful music player with
 user-friendly interface.
 
 %prep
-%setup -q -n %{name}-%{commit}
+%autosetup -n %{name}-%{commit}
 
 %build
 %{__python2} setup.py build
@@ -65,6 +65,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{python2_sitelib}/*
 
 %changelog
+* Wed Dec 30 2015 Maxim Orlov <murmansksity@gmail.com> - 3.1.2-1.20151222git5a005ad.R
+- Update to latest git snapshot
+
 * Mon Nov 09 2015 Maxim Orlov <murmansksity@gmail.com> - 3.1.01-1.20151104git4585517.R
 - Update to latest git snapshot
 
