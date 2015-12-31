@@ -1,10 +1,10 @@
-%global commit 5a005ade445b5ca929358694796ef49dab3732d1
+%global commit cdbd6e79e2552494392db211b29a3d8653bfb89b
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global date 20151222
+%global date 20151231
 
 Name:           foobnix
 Version:        3.1.2
-Release:        1.%{date}git%{shortcommit}%{?dist}
+Release:        2.%{date}git%{shortcommit}%{?dist}
 Summary:        Simple and powerful music player for Linux
 
 License:        GPLv3
@@ -65,6 +65,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{python2_sitelib}/*
 
 %changelog
+* Thu Dec 31 2015 Maxim Orlov <murmansksity@gmail.com> - 3.1.2-2.20151231gitcdbd6e7.R
+- Update to latest git snapshot
+
 * Wed Dec 30 2015 Maxim Orlov <murmansksity@gmail.com> - 3.1.2-1.20151222git5a005ad.R
 - Update to latest git snapshot
 
