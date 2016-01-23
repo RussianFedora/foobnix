@@ -21,13 +21,15 @@ Requires:       dbus-python
 Requires:       gstreamer1
 Requires:       gstreamer1-plugins-base
 Requires:       gstreamer1-plugins-good
+Requires:       python-chardet
+Requires:       python-gobject
+Requires:       python-gobject-base
 Requires:       python-mutagen
 Requires:       python-simplejson
-Requires:       python-chardet
-Requires:       pygobject3
 Requires:       keybinder3
 Requires:       webkitgtk3
-Requires:       pylast
+# last.fm support
+Requires:       pylast >= 1.4.2
 
 %description
 Foobnix is a small, fast, customizable, powerful music player with
