@@ -23,7 +23,6 @@ Requires:       gstreamer1-plugins-base
 Requires:       gstreamer1-plugins-good
 Requires:       python-mutagen
 Requires:       python-simplejson
-Requires:       python-setuptools
 Requires:       python-chardet
 Requires:       pygobject3
 Requires:       keybinder3
