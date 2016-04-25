@@ -29,8 +29,6 @@ Requires:       python-mutagen
 Requires:       python-simplejson
 Requires:       keybinder3
 Requires:       webkitgtk3
-# last.fm support
-Requires:       pylast >= 1.4.2
 
 %description
 Foobnix is a small, fast, customizable, powerful music player with
@@ -69,6 +67,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %changelog
 * Mon Apr 25 2016 Maxim Orlov <murmansksity@gmail.com> - 3.1.2-3.20160425git873d7bd.R
 - Update to latest git snapshot
+- Remove R: pylast
 
 * Thu Dec 31 2015 Maxim Orlov <murmansksity@gmail.com> - 3.1.2-2.20151231gitcdbd6e7.R
 - Update to latest git snapshot
