@@ -1,11 +1,12 @@
-%global commit cdbd6e79e2552494392db211b29a3d8653bfb89b
+# commit
+%global commit fda06da2902e53869c36fa06631cb430d8201dcd
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global date 20151231
+%global date 20160425
 
 Name:           foobnix
 Version:        3.1.2
-Release:        2.%{date}git%{shortcommit}%{?dist}
-Summary:        Simple and powerful music player for Linux
+Release:        3.%{date}git%{shortcommit}%{?dist}
+Summary:        Simple and Powerful music player for Linux
 
 License:        GPLv3
 URL:            http://foobnix.com
@@ -56,7 +57,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 /usr/bin/update-desktop-database &> /dev/null || :
 
 %files -f %{name}.lang
-%doc README README.md CHANGELOG
+%doc README.md CHANGELOG
 %license COPYING
 %{_bindir}/%{name}
 %{_datadir}/%{name}
@@ -66,6 +67,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{python2_sitelib}/*
 
 %changelog
+* Mon Apr 25 2016 Maxim Orlov <murmansksity@gmail.com> - 3.1.2-3.20160425gitfda06da.R
+- Update to latest git snapshot
+
 * Thu Dec 31 2015 Maxim Orlov <murmansksity@gmail.com> - 3.1.2-2.20151231gitcdbd6e7.R
 - Update to latest git snapshot
 
