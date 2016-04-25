@@ -1,5 +1,5 @@
 # commit
-%global commit fda06da2902e53869c36fa06631cb430d8201dcd
+%global commit 873d7bd312e6d34273f03f6f75b2a64fb0190d14
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global date 20160425
 
@@ -67,7 +67,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{python2_sitelib}/*
 
 %changelog
-* Mon Apr 25 2016 Maxim Orlov <murmansksity@gmail.com> - 3.1.2-3.20160425gitfda06da.R
+* Mon Apr 25 2016 Maxim Orlov <murmansksity@gmail.com> - 3.1.2-3.20160425git873d7bd.R
 - Update to latest git snapshot
 
 * Thu Dec 31 2015 Maxim Orlov <murmansksity@gmail.com> - 3.1.2-2.20151231gitcdbd6e7.R
