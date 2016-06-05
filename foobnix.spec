@@ -1,12 +1,12 @@
 # commit
-%global commit 873d7bd312e6d34273f03f6f75b2a64fb0190d14
+%global commit 6fed0a2c878da51460c76d714e2f2d9759a21f3c
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global date 20160425
+%global date 20160531
 
 Name:           foobnix
 Version:        3.1.2
-Release:        3.%{date}git%{shortcommit}%{?dist}
-Summary:        Simple and Powerful music player for Linux
+Release:        4.%{date}git%{shortcommit}%{?dist}
+Summary:        Lightweight and Functional music player for Linux
 
 License:        GPLv3
 URL:            http://foobnix.com
@@ -27,13 +27,15 @@ Requires:       python-gobject
 Requires:       python-gobject-base
 Requires:       python-mutagen
 Requires:       python-simplejson
+Requires:       python-six
 Requires:       keybinder3
 Requires:       webkitgtk3
 
 %description
-Foobnix is a small, fast, customizable, powerful music player with
-user-friendly interface.
-
+Supports all popular formats, FLAC, lossless, CUE, and 5000+ radio
+stations out of the box. Online music for free. Last.fm and
+VKontakte integration and more...
+                                                                       
 %prep
 %autosetup -n %{name}-%{commit}
 
@@ -43,6 +45,8 @@ user-friendly interface.
 %install
 %{__python2} setup.py install --root %{buildroot}
 
+%{__rm} -r %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}-symbolic.svg
+
 %find_lang %{name}
 
 %check
@@ -50,9 +54,17 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %post
 /usr/bin/update-desktop-database &> /dev/null || :
+/bin/touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
 
 %postun
 /usr/bin/update-desktop-database &> /dev/null || :
+if [ $1 -eq 0 ] ; then
+    /bin/touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
+fi
+
+%posttrans
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 
 %files -f %{name}.lang
 %doc README.md CHANGELOG
@@ -60,11 +72,17 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/pixmaps/%{name}.png
+%{_datadir}/icons/hicolor/*/apps/%{name}.svg
+%{_datadir}/icons/hicolor/*/actions/%{name}-*.svg
+%{_datadir}/icons/hicolor/*/apps/%{name}-symbolic.svg
 %{_mandir}/man1/%{name}.1*
-%{python2_sitelib}/*
+%{python2_sitelib}/%{name}
+%{python2_sitelib}/%{name}-*.egg-info
 
 %changelog
+* Tue May 31 2016 Maxim Orlov <murmansksity@gmail.com> - 3.1.2-4.20160531git6fed0a2.R
+- Update to latest git snapshot
+
 * Mon Apr 25 2016 Maxim Orlov <murmansksity@gmail.com> - 3.1.2-3.20160425git873d7bd.R
 - Update to latest git snapshot
 - Remove R: pylast
